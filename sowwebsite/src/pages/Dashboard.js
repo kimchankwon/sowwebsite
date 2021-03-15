@@ -3,6 +3,8 @@ import { Container, Typography, makeStyles } from "@material-ui/core";
 import { Path } from "../helpers/Path";
 import { NavBar } from "../components/Navbar";
 import { auth } from "../services/firebase";
+import { roleToString } from "../helpers/Role";
+import { getUser } from "../services/users";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -15,16 +17,17 @@ export const Dashboard = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    setUser(auth().currentUser);
+    getUser(auth().currentUser.uid).then((user_i) => {
+      setUser(user_i);
+    });
   }, []);
-
-  console.log(user);
 
   return user ? (
     <>
       <NavBar active={Path.Dashboard} />
       <Container maxWidth="sm">
         <Typography>Hello {user.email}</Typography>
+        <Typography>Your rank: {roleToString(user.role)}</Typography>
       </Container>
     </>
   ) : (

@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, makeStyles, Link, Container, Button } from "@material-ui/core";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Path } from "../helpers/Path";
-import { isAuthenticated, logout } from "../helpers/auth";
+import { isAuthenticated, logout } from "../services/auth";
 
 const useStyles = makeStyles((theme) => ({
   blackText: {

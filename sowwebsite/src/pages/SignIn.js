@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link as ReactRouterLink, Redirect } from "react-router-dom";
-import { signin } from "../helpers/auth";
+import { signin } from "../services/auth";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { isAuthenticated } from "../helpers/auth";
+import { isAuthenticated } from "../services/auth";
 import { Path } from "../helpers/Path";
 import {
   makeStyles,
