@@ -9,6 +9,7 @@ import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { Home } from "./pages/Home";
 import { Dashboard } from "./pages/Dashboard";
 import { SignUp } from "./pages/SignUp";
+import { Profile } from "./pages/profile/Profile";
 import { SignIn } from "./pages/SignIn";
 import { auth } from "./services/firebase";
 import "./styles.css";
@@ -88,6 +89,11 @@ class App extends Component {
                 path={Path.Dashboard}
                 authenticated={this.state.authenticated}
                 component={Dashboard}
+              />
+              <PrivateRoute
+                path={Path.Profile}
+                authenticated={this.state.authenticated}
+                component={Profile}
               />
               <PublicRoute
                 path={Path.SignUp}

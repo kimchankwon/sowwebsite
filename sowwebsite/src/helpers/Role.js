@@ -18,5 +18,7 @@ export function roleToString(roleNumber) {
       return "Student Leader";
     case Roles.Member:
       return "Member";
+    default:
+      return "N/A";
   }
 }

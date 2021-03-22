@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, makeStyles, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Container, Typography, Button } from "@material-ui/core";
 import { Path } from "../helpers/Path";
 import { NavBar } from "../components/Navbar";
 import { getList, getRef } from "../services/storage";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    backgroundColor: "yellow",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   title: {
+//     backgroundColor: "yellow",
+//   },
+// }));
 
 export const Home = () => {
-  const history = useHistory();
   const [resources, setResources] = useState([]);
-  const classes = useStyles();
+  // const classes = useStyles();
   useEffect(() => {
     getList().then((r) => {
       setResources(r);

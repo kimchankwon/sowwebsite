@@ -1,9 +1,9 @@
-import { db } from "../services/firebase";
+import { db, auth } from "../services/firebase";
 
-export const getUser = (uid) => {
+export const getUser = () => {
   return new Promise(function (resolve, reject) {
     db.collection("users")
-      .doc(uid)
+      .doc(auth().currentUser.uid)
       .get()
       .then((docRef) => {
         resolve(docRef.data());
@@ -14,17 +14,18 @@ export const getUser = (uid) => {
   });
 };
 
-export const updateUserRole = (uid, role) => {
-  var xtectraRef = db.collection("users").doc(uid);
-
-  return xtectraRef
-    .update({
-      role: role,
-    })
-    .then(() => {
-      console.log("Document successfully updated!");
-    })
-    .catch((error) => {
-      console.error("Error updating document: ", error);
-    });
+export const updateField = (name, value, label) => {
+  return new Promise(function (resolve, reject) {
+    db.collection("users")
+      .doc(auth().currentUser.uid)
+      .update({
+        [name]: value,
+      })
+      .then(() => {
+        resolve("Successfully updated " + label);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };

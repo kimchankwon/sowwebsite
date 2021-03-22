@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, makeStyles } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { Path } from "../helpers/Path";
 import { NavBar } from "../components/Navbar";
-import { auth } from "../services/firebase";
 import { roleToString } from "../helpers/Role";
 import { getUser } from "../services/users";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    backgroundColor: "yellow",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   title: {
+//     backgroundColor: "yellow",
+//   },
+// }));
 
 export const Dashboard = () => {
   const [user, setUser] = useState(null);
-  const classes = useStyles();
+  // const classes = useStyles();
 
   useEffect(() => {
-    getUser(auth().currentUser.uid).then((user_i) => {
+    getUser().then((user_i) => {
       setUser(user_i);
     });
   }, []);
