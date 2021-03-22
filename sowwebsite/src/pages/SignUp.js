@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link as ReactRouterLink, Redirect } from "react-router-dom";
-import { signup } from "../helpers/auth";
+import { signup } from "../services/auth";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { isAuthenticated } from "../helpers/auth";
+import { isAuthenticated } from "../services/auth";
 import { Path } from "../helpers/Path";
 import {
   makeStyles,
@@ -16,6 +16,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import { Roles } from "../helpers/Role";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -57,7 +58,7 @@ export const SignUp = () => {
 
   async function submit(email, password) {
     try {
-      await signup(email, password);
+      await signup(email, password, Roles.Member);
     } catch (error) {
       setState({ error: error.message, showMessage: true });
     }

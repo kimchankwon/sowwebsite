@@ -1,7 +1,14 @@
-import { auth } from "../services/firebase";
+import { auth, db } from "./firebase";
 
-export function signup(email, password) {
-  return auth().createUserWithEmailAndPassword(email, password);
+export function signup(email, password, role) {
+  return auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      db.collection("users").doc(auth().currentUser.uid).set({
+        email: email,
+        role: role,
+      });
+    });
 }
 
 export function signin(email, password) {
