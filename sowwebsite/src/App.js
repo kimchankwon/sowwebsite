@@ -16,6 +16,7 @@ import "./styles.css";
 import history from "./helpers/History";
 import { Theme } from "./helpers/Theme";
 import { Path } from "./helpers/Path";
+import { ResetPassword } from "./pages/ResetPassword";
 
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
@@ -94,6 +95,11 @@ class App extends Component {
                 path={Path.Profile}
                 authenticated={this.state.authenticated}
                 component={Profile}
+              />
+              <PrivateRoute
+                path={Path.ResetPassword}
+                authenticated={this.state.authenticated}
+                component={ResetPassword}
               />
               <PublicRoute
                 path={Path.SignUp}
