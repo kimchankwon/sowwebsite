@@ -54,6 +54,15 @@ export const NavBar = ({ active }) => {
               </Link>
             </Grid>
             <Grid item>
+              <Link
+                component={ReactRouterLink}
+                underline={active === Path.Profile ? "always" : "hover"}
+                to={Path.Profile}
+              >
+                Profile
+              </Link>
+            </Grid>
+            <Grid item>
               <Button
                 className={classes.logOutButton}
                 variant="outlined"
