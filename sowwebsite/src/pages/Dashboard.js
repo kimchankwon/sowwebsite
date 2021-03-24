@@ -4,6 +4,7 @@ import { Path } from "../helpers/Path";
 import { NavBar } from "../components/Navbar";
 import { roleToString } from "../helpers/Role";
 import { getUser } from "../services/users";
+import { isAuthenticated } from "../services/auth";
 
 // const useStyles = makeStyles((theme) => ({
 //   title: {

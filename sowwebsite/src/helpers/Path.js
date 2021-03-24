@@ -5,4 +5,5 @@ export const Path = {
   Chat: "/chat",
   Dashboard: "/dashboard",
   Profile: "/profile",
+  ResetPassword: "/reset-password",
 };
