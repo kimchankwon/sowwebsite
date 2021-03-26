@@ -4,7 +4,6 @@ import { Path } from "../helpers/Path";
 import { NavBar } from "../components/Navbar";
 import { roleToString } from "../helpers/Role";
 import { getUser } from "../services/users";
-import { isAuthenticated } from "../services/auth";
 
 // const useStyles = makeStyles((theme) => ({
 //   title: {
@@ -26,7 +25,9 @@ export const Dashboard = () => {
     <>
       <NavBar active={Path.Dashboard} />
       <Container maxWidth="sm">
-        <Typography>Hello {user.email}</Typography>
+        <Typography>
+          Hello {user.firstName} {user.lastName}
+        </Typography>
         <Typography>Your rank: {roleToString(user.role)}</Typography>
       </Container>
     </>

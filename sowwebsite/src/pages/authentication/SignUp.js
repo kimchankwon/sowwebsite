@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link as ReactRouterLink, Redirect } from "react-router-dom";
-import { signin } from "../services/auth";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { isAuthenticated } from "../services/auth";
-import { Path } from "../helpers/Path";
+import { signup, isAuthenticated } from "../../services/auth";
+import { Path } from "../../helpers/Path";
 import {
   makeStyles,
   Container,
@@ -16,6 +15,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import { Roles } from "../../helpers/Role";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -31,12 +31,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const signInFormValidationSchema = yup.object().shape({
-  email: yup.string().email().required("Enter your email"),
-  password: yup.string().required("Enter your password"),
+const signUpFormValidationSchema = yup.object().shape({
+  email: yup.string().email().required("Enter valid email"),
+  password: yup
+    .string()
+    .matches(/^(?=.*[A-Za-z])(?=.*[0-9!@#$%^&*()]).{7,20}\S$/)
+    .required(
+      "Please enter a valid password. One alpabetic, one special character or number, length between 8 to 20 characters"
+    ),
+  confirmPassword: yup
+    .string()
+    .required("Required")
+    .test("password-match", "Password must match", (value) => {
+      return this.parent.password === value;
+    }),
 });
 
-export const SignIn = () => {
+export const SignUp = () => {
   const classes = useStyles();
   const [state, setState] = useState({ showMessage: false, error: "" });
 
@@ -46,7 +57,7 @@ export const SignIn = () => {
 
   async function submit(email, password) {
     try {
-      await signin(email, password);
+      await signup(email, password, Roles.Member);
     } catch (error) {
       setState({ error: error.message, showMessage: true });
     }
@@ -70,21 +81,22 @@ export const SignIn = () => {
           </Snackbar>
           <Container maxWidth="md">
             <Typography variant="h4" align="center" gutterBottom>
-              Log In
+              Sign Up
             </Typography>
             <Typography align="center" gutterBottom>
-              Log into your SOW Account
+              Create a SOW Account
             </Typography>
           </Container>
           <Formik
             initialValues={{
               email: "",
               password: "",
+              confirmPassword: "",
             }}
             onSubmit={(values) => {
               submit(values.email, values.password);
             }}
-            validationSchema={signInFormValidationSchema}
+            validationSchema={signUpFormValidationSchema}
           >
             {(props) => {
               const {
@@ -129,6 +141,28 @@ export const SignIn = () => {
                     onBlur={handleBlur}
                     autoComplete="current-password"
                   />
+                  <TextField
+                    required
+                    fullWidth
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    value={values.confirmPassword}
+                    type="password"
+                    helperText={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? errors.confirmPassword
+                        : "Re-enter password to confirm"
+                    }
+                    error={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? true
+                        : false
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    id="confirmPassword"
+                    autoComplete="new-password"
+                  />
                   <Grid container className={classes.button}>
                     <Button
                       fullWidth
@@ -136,7 +170,7 @@ export const SignIn = () => {
                       variant="contained"
                       type="submit"
                     >
-                      Log In
+                      Sign Up
                     </Button>
                   </Grid>
                 </Form>
@@ -144,25 +178,15 @@ export const SignIn = () => {
             }}
           </Formik>
         </div>
-        <Grid container>
-          <Grid item xs>
-            <Link
-              className={classes.bottomLink}
-              underline="hover"
-              component={ReactRouterLink}
-              to={Path.ForgotPassword}
-            >
-              Forgot password
-            </Link>
-          </Grid>
+        <Grid container justify="center">
           <Grid item>
             <Link
               className={classes.bottomLink}
               underline="hover"
               component={ReactRouterLink}
-              to={Path.SignUp}
+              to={Path.SignIn}
             >
-              Create an account
+              Already have an account? Log in
             </Link>
           </Grid>
         </Grid>
