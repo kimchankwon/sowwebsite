@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, makeStyles, Link, Container, Button } from "@material-ui/core";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link as ReactRouterLink, useHistory } from "react-router-dom";
 import { Path } from "../helpers/Path";
 import { isAuthenticated, logout } from "../services/auth";
+import logo from "../images/sowLogo.png";
 
 const useStyles = makeStyles((theme) => ({
   blackText: {
@@ -17,9 +18,14 @@ const useStyles = makeStyles((theme) => ({
   navBarPadding: {
     margin: theme.spacing(2, 2, 2, 2),
   },
+  sowLogo: {
+    height: "40px",
+    cursor: "pointer",
+  },
 }));
 
 export const NavBar = ({ active }) => {
+  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -32,15 +38,12 @@ export const NavBar = ({ active }) => {
         spacing={4}
       >
         <Grid item>
-          <Link
-            component={ReactRouterLink}
-            className={classes.blackText}
-            underline={active === Path.Home ? "always" : "hover"}
-            to={Path.Home}
-            variant="h6"
-          >
-            Home
-          </Link>
+          <img
+            className={classes.sowLogo}
+            alt="SOW Logo"
+            onClick={() => history.push(Path.Home)}
+            src={logo}
+          />
         </Grid>
         {isAuthenticated() ? (
           <>
