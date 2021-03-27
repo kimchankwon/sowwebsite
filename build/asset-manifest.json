@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/sowwebsite/static/css/main.eff763f1.chunk.css",
+    "main.js": "/sowwebsite/static/js/main.9405f523.chunk.js",
+    "main.js.map": "/sowwebsite/static/js/main.9405f523.chunk.js.map",
+    "runtime-main.js": "/sowwebsite/static/js/runtime-main.6b0d9059.js",
+    "runtime-main.js.map": "/sowwebsite/static/js/runtime-main.6b0d9059.js.map",
+    "static/js/2.d93f0821.chunk.js": "/sowwebsite/static/js/2.d93f0821.chunk.js",
+    "static/js/2.d93f0821.chunk.js.map": "/sowwebsite/static/js/2.d93f0821.chunk.js.map",
+    "index.html": "/sowwebsite/index.html",
+    "static/css/main.eff763f1.chunk.css.map": "/sowwebsite/static/css/main.eff763f1.chunk.css.map",
+    "static/js/2.d93f0821.chunk.js.LICENSE.txt": "/sowwebsite/static/js/2.d93f0821.chunk.js.LICENSE.txt",
+    "static/media/sowLogo.9ca503b8.png": "/sowwebsite/static/media/sowLogo.9ca503b8.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6b0d9059.js",
+    "static/js/2.d93f0821.chunk.js",
+    "static/css/main.eff763f1.chunk.css",
+    "static/js/main.9405f523.chunk.js"
+  ]
+}
