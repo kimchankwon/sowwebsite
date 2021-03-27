@@ -84,7 +84,7 @@ class App extends Component {
     ) : (
       <CssBaseline>
         <ThemeProvider theme={Theme}>
-          <Router history={history}>
+          <Router basename={process.env.PUBLIC_URL} history={history}>
             <Switch>
               <Route exact path={Path.Home} component={Home} />
               <PrivateRoute
