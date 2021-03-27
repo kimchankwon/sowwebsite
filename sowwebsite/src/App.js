@@ -8,17 +8,18 @@ import {
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { Home } from "./pages/Home";
 import { Dashboard } from "./pages/Dashboard";
-import { SignUp } from "./pages/SignUp";
 import { Profile } from "./pages/profile/Profile";
-import { SignIn } from "./pages/SignIn";
+import { SignUp } from "./pages/authentication/SignUp";
+import { SignIn } from "./pages/authentication/SignIn";
+import { ForgotPassword } from "./pages/authentication/ForgotPassword";
 import { auth } from "./services/firebase";
 import "./styles.css";
 import history from "./helpers/History";
 import { Theme } from "./helpers/Theme";
 import { Path } from "./helpers/Path";
-import { ResetPassword } from "./pages/ResetPassword";
+import { ResetPassword } from "./pages/profile/ResetPassword";
 
-function PrivateRoute({ component: Component, authenticated, ...rest }) {
+const PrivateRoute = ({ component: Component, authenticated, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -33,9 +34,9 @@ function PrivateRoute({ component: Component, authenticated, ...rest }) {
       }
     />
   );
-}
+};
 
-function PublicRoute({ component: Component, authenticated, ...rest }) {
+const PublicRoute = ({ component: Component, authenticated, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -48,7 +49,7 @@ function PublicRoute({ component: Component, authenticated, ...rest }) {
       }
     />
   );
-}
+};
 
 class App extends Component {
   constructor() {
@@ -60,7 +61,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    auth().onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authenticated: true,
@@ -110,6 +111,11 @@ class App extends Component {
                 path={Path.SignIn}
                 authenticated={this.state.authenticated}
                 component={SignIn}
+              />
+              <PublicRoute
+                path={Path.ForgotPassword}
+                authenticated={this.state.authenticated}
+                component={ForgotPassword}
               />
             </Switch>
           </Router>

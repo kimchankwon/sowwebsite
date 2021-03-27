@@ -1,9 +1,9 @@
 import { db, auth } from "../services/firebase";
 
 export const getUser = () => {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     db.collection("users")
-      .doc(auth().currentUser.uid)
+      .doc(auth.currentUser.uid)
       .get()
       .then((docRef) => {
         resolve(docRef.data());
@@ -15,9 +15,9 @@ export const getUser = () => {
 };
 
 export const updateField = (name, value, label) => {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     db.collection("users")
-      .doc(auth().currentUser.uid)
+      .doc(auth.currentUser.uid)
       .update({
         [name]: value,
       })

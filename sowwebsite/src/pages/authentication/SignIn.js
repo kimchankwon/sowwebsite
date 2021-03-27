@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link as ReactRouterLink, Redirect } from "react-router-dom";
-import { signup } from "../services/auth";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { isAuthenticated } from "../services/auth";
-import { Path } from "../helpers/Path";
+import { signin, isAuthenticated } from "../../services/auth";
+import { Path } from "../../helpers/Path";
 import {
   makeStyles,
   Container,
@@ -16,7 +15,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { Roles } from "../helpers/Role";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -32,23 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const signUpFormValidationSchema = yup.object().shape({
-  email: yup.string().email().required("Enter valid email"),
-  password: yup
-    .string()
-    .matches(/^(?=.*[A-Za-z])(?=.*[0-9!@#$%^&*()]).{7,20}\S$/)
-    .required(
-      "Please enter a valid password. One alpabetic, one special character or number, length between 8 to 20 characters"
-    ),
-  confirmPassword: yup
-    .string()
-    .required("Required")
-    .test("password-match", "Password must match", function (value) {
-      return this.parent.password === value;
-    }),
+const signInFormValidationSchema = yup.object().shape({
+  email: yup.string().email().required("Enter your email"),
+  password: yup.string().required("Enter your password"),
 });
 
-export const SignUp = () => {
+export const SignIn = () => {
   const classes = useStyles();
   const [state, setState] = useState({ showMessage: false, error: "" });
 
@@ -56,13 +43,15 @@ export const SignUp = () => {
     setState({ ...state, showMessage: false });
   };
 
-  async function submit(email, password) {
-    try {
-      await signup(email, password, Roles.Member);
-    } catch (error) {
-      setState({ error: error.message, showMessage: true });
-    }
-  }
+  const submit = (email, password) => {
+    signin(email, password)
+      .then((m) => {
+        console.log(m);
+      })
+      .catch((error) => {
+        setState({ error: error.message, showMessage: true });
+      });
+  };
 
   const { showMessage, error } = state;
   return isAuthenticated() ? (
@@ -82,22 +71,21 @@ export const SignUp = () => {
           </Snackbar>
           <Container maxWidth="md">
             <Typography variant="h4" align="center" gutterBottom>
-              Sign Up
+              Log In
             </Typography>
             <Typography align="center" gutterBottom>
-              Create a SOW Account
+              Log into your SOW Account
             </Typography>
           </Container>
           <Formik
             initialValues={{
               email: "",
               password: "",
-              confirmPassword: "",
             }}
             onSubmit={(values) => {
               submit(values.email, values.password);
             }}
-            validationSchema={signUpFormValidationSchema}
+            validationSchema={signInFormValidationSchema}
           >
             {(props) => {
               const {
@@ -142,28 +130,6 @@ export const SignUp = () => {
                     onBlur={handleBlur}
                     autoComplete="current-password"
                   />
-                  <TextField
-                    required
-                    fullWidth
-                    name="confirmPassword"
-                    label="Confirm Password"
-                    value={values.confirmPassword}
-                    type="password"
-                    helperText={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? errors.confirmPassword
-                        : "Re-enter password to confirm"
-                    }
-                    error={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? true
-                        : false
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    id="confirmPassword"
-                    autoComplete="new-password"
-                  />
                   <Grid container className={classes.button}>
                     <Button
                       fullWidth
@@ -171,7 +137,7 @@ export const SignUp = () => {
                       variant="contained"
                       type="submit"
                     >
-                      Sign Up
+                      Log In
                     </Button>
                   </Grid>
                 </Form>
@@ -179,15 +145,25 @@ export const SignUp = () => {
             }}
           </Formik>
         </div>
-        <Grid container justify="center">
+        <Grid container>
+          <Grid item xs>
+            <Link
+              className={classes.bottomLink}
+              underline="hover"
+              component={ReactRouterLink}
+              to={Path.ForgotPassword}
+            >
+              Forgot password
+            </Link>
+          </Grid>
           <Grid item>
             <Link
               className={classes.bottomLink}
               underline="hover"
               component={ReactRouterLink}
-              to={Path.SignIn}
+              to={Path.SignUp}
             >
-              Already have an account? Log in
+              Create an account
             </Link>
           </Grid>
         </Grid>

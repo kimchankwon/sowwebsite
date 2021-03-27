@@ -181,8 +181,11 @@ export const Profile = () => {
             }}
             save={updateField}
           />
-          <Typography>Role: {roleToString(user.role)}</Typography>
-          <Typography>Service At SOW: {user.serviceAtSow} years</Typography>
+          <Typography>
+            Role: {roleToString(user.role)}
+            <br />
+            Service At SOW: {user.serviceAtSow} years
+          </Typography>
           <Grid item xs={12} alignItems="center" justify="flex-start">
             <Link
               underline="hover"

@@ -6,7 +6,7 @@ export const Roles = {
   Member: 9,
 };
 
-export function roleToString(roleNumber) {
+export const roleToString = (roleNumber) => {
   switch (roleNumber) {
     case Roles.Admin:
       return "Admin";
@@ -21,4 +21,4 @@ export function roleToString(roleNumber) {
     default:
       return "N/A";
   }
-}
+};

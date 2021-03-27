@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link as ReactRouterLink, Redirect } from "react-router-dom";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { isAuthenticated, resetPassword } from "../services/auth";
-import { Path } from "../helpers/Path";
+import { isAuthenticated, resetPassword } from "../../services/auth";
+import { Path } from "../../helpers/Path";
 import {
   makeStyles,
   Container,
@@ -40,7 +40,7 @@ const resetPasswordFormValidationSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .required("Required")
-    .test("password-match", "Password must match", function (value) {
+    .test("password-match", "Password must match", (value) => {
       return this.parent.password === value;
     }),
 });
@@ -79,7 +79,7 @@ export const ResetPassword = () => {
               Reset Password
             </Typography>
             <Typography align="center" gutterBottom>
-              You can reset your password here.
+              You can reset your password here
             </Typography>
           </Container>
           <Formik
