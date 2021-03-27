@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { Home } from "./pages/Home";
 import { Dashboard } from "./pages/Dashboard";
@@ -84,7 +79,7 @@ class App extends Component {
     ) : (
       <CssBaseline>
         <ThemeProvider theme={Theme}>
-          <Router basename={process.env.PUBLIC_URL} history={history}>
+          <BrowserRouter basename={process.env.PUBLIC_URL} history={history}>
             <Switch>
               <Route exact path={Path.Home} component={Home} />
               <PrivateRoute
@@ -118,7 +113,7 @@ class App extends Component {
                 component={ForgotPassword}
               />
             </Switch>
-          </Router>
+          </BrowserRouter>
         </ThemeProvider>
       </CssBaseline>
     );
